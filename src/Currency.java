@@ -6,11 +6,11 @@ public class Currency {
     private String code;
     private Map<String, Double> conversionRates;
 
-    public Currency(String name, String code, Map<String, Double> conversionRates) {
+    Currency(String name, String code) {
 
         this.name = name;
         this.code = code;
-        this.conversionRates = conversionRates;
+        this.conversionRates = null;
 
     }
 
@@ -36,6 +36,11 @@ public class Currency {
 
     public void setConversionRates(Map<String, Double> newConversionRates) {
         this.conversionRates = newConversionRates;
+    }
+
+    @Override
+    public String toString() {
+        return this.name + " (" + this.code + ")";
     }
 
 }
