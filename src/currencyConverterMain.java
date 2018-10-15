@@ -48,9 +48,6 @@ public class currencyConverterMain {
         from.setConversionRates(parseConversionRates(from.getCode(),
                 "/home/abbluiz/playground/conversion-rates.csv"));
 
-//        System.out.println(from);
-//        System.out.println(to);
-
         System.out.println("Result: " + originalValue + " " + from.getCode() + " equals to " +
                 (originalValue * from.getConversionRates().get(to.getCode())) + " " + to.getCode());
 
