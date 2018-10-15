@@ -40,7 +40,22 @@ public class Currency {
 
     @Override
     public String toString() {
-        return this.name + " (" + this.code + ")";
+
+        StringBuilder result = new StringBuilder(this.name + " (" + this.code + ")" + "\n\n");
+
+        if(this.conversionRates != null) {
+
+            for(Map.Entry m:this.conversionRates.entrySet())
+                result.append("1 ").append(this.code).append(" equals ").append(m.getValue()).append(" ").append(m.getKey()).append("\n");
+
+        } else {
+            result.append("No conversion rates stored");
+        }
+
+        result.append("\n");
+
+        return result.toString();
+
     }
 
 }
