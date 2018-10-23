@@ -6,11 +6,15 @@ public class Currency {
     private String code;
     private Map<String, Double> conversionRates;
 
+    Currency() {
+        this.conversionRates = null; // The map will be initially empty
+    }
+
     Currency(String name, String code) {
 
         this.name = name;
         this.code = code;
-        this.conversionRates = null;
+        this.conversionRates = null; // The map will be initially empty
 
     }
 
@@ -25,14 +29,6 @@ public class Currency {
     Map<String, Double> getConversionRates() {
         return this.conversionRates;
     }
-
-//    void setName(String newName) {
-//        this.name = newName;
-//    }
-//
-//    void setCode(String newCode) {
-//        this.code = newCode;
-//    }
 
     void setConversionRates(Map<String, Double> newConversionRates) {
         this.conversionRates = newConversionRates;
