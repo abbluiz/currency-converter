@@ -17,7 +17,7 @@ public class currencyConverterMain {
         System.out.println("Please, enter the .csv file which contains the available currencies");
 
         /*
-         * Read file and fetch all possible currencies that the program can convert
+         * Reads file and fetch all possible currencies that the program can convert
          * User must provide the file; it must be under the program specifications format
          * Available Currencies File Format: must be comma separated values (CSV)
          * First row is the header (will be ignored by program; useful for human readability)
@@ -41,7 +41,7 @@ public class currencyConverterMain {
                 "ISO code of currency to be converted to");
         System.out.println("Use the following format: X CODE to CODE, being X an integer or decimal number, and CODE " +
                 "the ISO code of the currency");
-        System.out.println("e.g. \"117.34 USD to CAD\"\n");
+        System.out.println("e. g. \"117.34 USD to CAD\"\n");
 
         // Reads input from user: amount to be converted and ISO codes of currencies to be converted from and to
         originalValue = input.nextDouble(); // Reads amount to be converted from
@@ -59,13 +59,20 @@ public class currencyConverterMain {
                 to.getCode() + " (" + to.getName() + ")" + "\n");
 
         /*
-         * Read file and fetch all possible conversion rates for the currencies which are being converted from/to
+         * Reads file and fetch all possible conversion rates for the currencies which are being converted from/to
          * User must provide the file; it must be under the program specifications format
          * Conversion Rates File Format: must be comma separated values (CSV)
+         * Each column in header must contain ISO codes of available currencies which will be converted from
+         * Each row in first column must contain ISO codes of available currencies which will be converted to
+         * e. g. The conversion rate used to convert 1 CAD to EUR will be located in column CAD and row EUR
+         * The method parseConversionRates should return a map containing all conversion rates to convert from a
+         * specific currency to all other available currency
          */
         System.out.println("Please, enter the .csv file which contains the conversion rates");
         from.setConversionRates(parseConversionRates(from.getCode(),
-                input.next()));
+                input.next())); // Sets Currency map
+        // (e.g. if converting from CAD, it returns and sets a map that contains the conversion rates from CAD to
+        // all other available currencies)
 
         System.out.println("\nResult: " + originalValue + " " + from.getCode() + " equals to " +
                 (originalValue * from.getConversionRates().get(to.getCode())) + " " + to.getCode());
@@ -99,7 +106,6 @@ public class currencyConverterMain {
 
     }
 
-    // TODO: Comment this function
     private static Map<String, Double> parseConversionRates(String currencyCode, String conversionRatesFileName) {
 
 
@@ -110,31 +116,33 @@ public class currencyConverterMain {
             FileReader conversionRatesFile = new FileReader(conversionRatesFileName);
 
             CSVReader csvReader = new CSVReader(conversionRatesFile);
-            String[] line;
-            int convertToCurrencyIndex = 0;
+            String[] row;
+            int convertFromCurrencyIndex = 0;
 
             conversionRates = new HashMap<>();
 
-            line = csvReader.readNext();
+            row = csvReader.readNext();
 
-            if(line != null) {
+            // Iterates through the header and find the index of currency to convert from
+            if(row != null) {
 
-                for(String cell : line) {
+                for(String cell : row) {
 
                     if(currencyCode.equals(cell))
                         break;
 
-                    convertToCurrencyIndex++;
+                    convertFromCurrencyIndex++;
 
                 }
 
             }
 
-            while ((line = csvReader.readNext()) != null) {
+            // Iterates through the rows and put conversion rates into map, using the index previously found
+            while ((row = csvReader.readNext()) != null) {
 
-                String convertFromCurrency = line[0];
+                String convertToCurrency = row[0];
 
-                conversionRates.put(convertFromCurrency, Double.parseDouble(line[convertToCurrencyIndex]));
+                conversionRates.put(convertToCurrency, Double.parseDouble(row[convertFromCurrencyIndex]));
 
             }
 
@@ -143,6 +151,7 @@ public class currencyConverterMain {
             e.printStackTrace();
         }
 
+        // It should return a map with ISO codes as keys and conversion rates as values
         return conversionRates;
 
     }

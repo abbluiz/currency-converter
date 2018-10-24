@@ -6,10 +6,6 @@ public class Currency {
     private String code;
     private Map<String, Double> conversionRates;
 
-    Currency() {
-        this.conversionRates = null; // The map will be initially empty
-    }
-
     Currency(String name, String code) {
 
         this.name = name;
