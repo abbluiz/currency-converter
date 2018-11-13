@@ -10,7 +10,7 @@ public class Currency {
 
         this.name = name;
         this.code = code;
-        this.conversionRates = null; // The map will be initially empty
+        this.conversionRates = null;
 
     }
 

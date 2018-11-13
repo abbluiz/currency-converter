@@ -65,8 +65,6 @@ public class currencyConverterMain {
          * Each column in header must contain ISO codes of available currencies which will be converted from
          * Each row in first column must contain ISO codes of available currencies which will be converted to
          * e. g. The conversion rate used to convert 1 CAD to EUR will be located in column CAD and row EUR
-         * The method parseConversionRates should return a map containing all conversion rates to convert from a
-         * specific currency to all other available currency
          */
         System.out.println("Please, enter the .csv file which contains the conversion rates");
         from.setConversionRates(parseConversionRates(from.getCode(),
@@ -74,6 +72,7 @@ public class currencyConverterMain {
         // (e.g. if converting from CAD, it returns and sets a map that contains the conversion rates from CAD to
         // all other available currencies)
 
+        // Calculates and prints result based on currency rate
         System.out.println("\nResult: " + originalValue + " " + from.getCode() + " equals to " +
                 (originalValue * from.getConversionRates().get(to.getCode())) + " " + to.getCode());
 
